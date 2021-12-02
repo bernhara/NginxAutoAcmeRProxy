@@ -4,7 +4,7 @@ services:
   nginx-proxy-automation-web:
     image: nginx:${NGINX_IMAGE_VERSION:-stable-alpine}
     labels:
-      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
     container_name: ${NGINX_WEB_SEVICE_NAME:-nginx-proxy-automation-web}
     restart: always
     ports:
@@ -30,6 +30,8 @@ services:
 
   nginx-proxy-automation-gen:
     image: nginxproxy/docker-gen:${DOCKER_GEN_IMAGE_VERSION:-0.7.7}
+    labels:
+       - com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen
     command: -notify-sighup ${NGINX_WEB_SEVICE_NAME:-nginx-proxy-automation-web} -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
     container_name: ${DOCKER_GEN_SEVICE_NAME:-nginx-proxy-automation-gen}
     restart: always
@@ -63,6 +65,10 @@ services:
       NGINX_PROXY_CONTAINER: ${NGINX_WEB_SEVICE_NAME:-nginx-proxy-automation-web}
 #!!      DEFAULT_EMAIL: ${DEFAULT_EMAIL:-mail@yourdomain.tld}
       DEBUG: ${ACME_COMPANION_DEBUG:-0}
+      ACME_CA_URI: "https://acme.zerossl.com/v2/DV90"
+#      ZEROSSL_API_KEY: "a60fd35f4a2d8ddf41b8d7edb1014806"
+      ACME_EAB_KID: "fci4GzDnDKv05g_trGjcGw"
+      ACME_EAB_HMAC_KEY: "WMnUrCwdSAHR3RetRZCuJT4sGTvxqSS4kOHEEn2-WzsvUDXImabmBjX-3qQKGIxK5CiYNSmG5g8ve-urWd3kZA"
     logging:
       driver: ${NGINX_LETSENCRYPT_LOG_DRIVER:-json-file}
       options:
