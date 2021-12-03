@@ -17,12 +17,11 @@ services:
 #      DEFAULT_HOST: ${DEFAULT_HOST}
 #      ENABLE_IPV6: "true"
     volumes:
-      - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d
+      - ${NGINX_FILES_PATH:-./data}/conf.d/:/etc/nginx/conf.d/
       - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d
       - ${NGINX_FILES_PATH:-./data}/html:/usr/share/nginx/html
       - ${NGINX_FILES_PATH:-./data}/certs:/etc/nginx/certs:ro
       - ${NGINX_FILES_PATH:-./data}/htpasswd:/etc/nginx/htpasswd:ro
-      - ${NGINX_REALIP_CONF_FILES_PATH:-./conf.d/realip.conf}:/etc/nginx/conf.d/realip.conf:ro
     logging:
       driver: ${NGINX_WEB_LOG_DRIVER:-json-file}
       options:
