@@ -3,3 +3,5 @@ data
 !.env.sample
 .DS_Store
 .idea/
+
+/local-*/
