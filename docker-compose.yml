@@ -1,5 +1,10 @@
 version: '3'
 
+#
+# nginx template update
+# curl -o nginx.tmpl https://raw.githubusercontent.com/nginx-proxy/nginx-proxy/main/nginx.tmpl
+#
+
 services:
   nginx-proxy-automation-web:
     image: nginx:${NGINX_IMAGE_VERSION:-stable-alpine}
